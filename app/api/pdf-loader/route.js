@@ -2,9 +2,14 @@ import { NextResponse } from "next/server";
 import { WebPDFLoader } from "@langchain/community/document_loaders/web/pdf";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 
-const pdfUrl =
-  "https://small-perch-713.convex.cloud/api/storage/6de5f9e4-635e-4e24-94a3-af25f527f619";
+// const pdfUrl =
+//   "https://small-perch-713.convex.cloud/api/storage/6de5f9e4-635e-4e24-94a3-af25f527f619";
 export async function GET(req) {
+
+    const reqUrl = req.url;
+    const {searchParams} = new URL(reqUrl);
+    const pdfUrl = searchParams.get('pdfUrl');
+    console.log(pdfUrl)
   const response = await fetch(pdfUrl);
   const data = await response.blob();
   const loader = new WebPDFLoader(data);
