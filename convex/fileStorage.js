@@ -11,14 +11,26 @@ export const AddFileEntryToDb = mutation({
     storageId: v.string(),
     fileName: v.string(),
     createBy: v.string(),
+    fileUrl: v.string(),
   },
   handler: async (ctx, args) => {
-    const result = await ctx.db.insert('pdfFiles', {
-      fileId:args.fileId,
-      fileName:args.fileName,
-      storageId:args.storageId,
-      createBy:args.createBy
-    })
-    return "Inserted"
-  }
+    const result = await ctx.db.insert("pdfFiles", {
+      fileId: args.fileId,
+      fileName: args.fileName,
+      storageId: args.storageId,
+      createBy: args.createBy,
+      fileUrl: args.fileUrl,
+    });
+    return "Inserted";
+  },
+});
+
+export const getFileUrl = mutation({
+  args: {
+    storageId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const url = await ctx.storage.getUrl(args.storageId);
+    return url;
+  },
 });
